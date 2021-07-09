@@ -28,7 +28,7 @@ gcloud iam service-accounts add-iam-policy-binding \
 gcloud builds submit --config cloudbuild.yaml .
 
 #caputre it's URL
-SERVICE_URL=$(gcloud beta run services describe autot --platform managed --region europe-west4    --format="get(status.url)")
+SERVICE_URL=$(gcloud beta run services describe autot --platform managed --region europe-central2    --format="get(status.url)")
 
 #Create Service acount for invoking the service
 gcloud iam service-accounts create autot-invoker --display-name "My autot-invoker servce account"
@@ -36,10 +36,10 @@ gcloud iam service-accounts create autot-invoker --display-name "My autot-invoke
 #Let invoker Service invoke a cloud run service 
 gcloud run services add-iam-policy-binding autot \
    --member=serviceAccount:autot-invoker@$GOOGLE_CLOUD_PROJECT.iam.gserviceaccount.com \
-   --role=roles/run.invoker --platform managed --region europe-west4
+   --role=roles/run.invoker --platform managed --region europe-central2
 
 #setup schedule for 2:05 am using service acount to invoke the cloud run instance. 
-gcloud app create --region=europe-west4
+gcloud app create --region=europe-central2
 gcloud scheduler jobs create http autot-schedule --schedule "05 2 * * *" \
    --http-method=get \
    --uri=${SERVICE_URL}/exec \
