@@ -25,7 +25,7 @@ steps:
   entrypoint: gcloud
   args: ['run', 'deploy', 'autot', 
     '--image', 'gcr.io/$PROJECT_ID/autot:latest',
-    '--region', 'us-east4',
+    '--region', 'europe-central2',
     '--platform', 'managed',
     '--no-allow-unauthenticated'
   ]
