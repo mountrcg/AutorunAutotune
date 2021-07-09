@@ -33,17 +33,17 @@ RUN mkdir ./src
 RUN cd ./src && git clone -b dev git://github.com/openaps/oref0.git || (echo doing checkout && cd oref0 && git checkout dev && git pull)
 RUN cd ./src/oref0 && npm run global-install
 
-RUN echo "ERROR - You need to remove this line and edit the next lines with your personal API Secret and site URL; whether you want UAM counted as Basal; and whether to tune the insulin curve" ; exit 1
+# RUN echo "ERROR - You need to remove this line and edit the next lines with your personal API Secret and site URL; whether you want UAM counted as Basal; and whether to tune the insulin curve" ; exit 1
 # Personal stuff: replace with correct values
-ENV API_SECRET missing 
-ENV SITE_URL https://mysite.herokuapp.com
-ENV UAM_BASAL false
+ENV API_SECRET j6ao4foRQu2D 
+ENV SITE_URL https://type1-data.herokuapp.com
+ENV UAM_BASAL true
 ENV TUNE true
 # Set Your Time zone
-ENV TZ Europe/London  
+ENV TZ Europe/Berlin  
 
 # Config
-ENV DAYS 1
+ENV DAYS 7
 
 
 RUN mkdir ./myopenaps 
