@@ -17,7 +17,7 @@ RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
     update-locale LANG=en_US.UTF-8
 
 ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en  
+ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
 ## For master branch use this:
@@ -30,29 +30,29 @@ RUN mkdir ./src
 #RUN npm ls -gp --depth=0 | awk -F/ '/node_modules/ && !/\/npm$/ {print $NF}' | xargs npm -g rm
 
 #COPY src ./src
-RUN cd ./src && git clone -b dev git://github.com/openaps/oref0.git || (echo doing checkout && cd oref0 && git checkout dev && git pull)
+RUN cd ./src && git clone -b dev git://github.com/mountrcg/oref0.git || (echo doing checkout && cd oref0 && git checkout dev && git pull)
 RUN cd ./src/oref0 && npm run global-install
 
 # RUN echo "ERROR - You need to remove this line and edit the next lines with your personal API Secret and site URL; whether you want UAM counted as Basal; and whether to tune the insulin curve" ; exit 1
 # Personal stuff: replace with correct values
-ENV API_SECRET j6ao4foRQu2D 
+ENV API_SECRET j6ao4foRQu2D
 ENV SITE_URL https://type1-data.herokuapp.com
-ENV UAM_BASAL true
+ENV UAM_BASAL false
 ENV TUNE true
 # Set Your Time zone
-ENV TZ Europe/Berlin  
+ENV TZ Europe/Berlin
 
 # Config
 ENV DAYS 7
 
 
-RUN mkdir ./myopenaps 
+RUN mkdir ./myopenaps
 RUN mkdir ./myopenaps/settings
 
 RUN sudo apt-get install -y python3-pip
 RUN pip3 install requests texttable
 
-## Get script that downloads profiles from Nightscout 
+## Get script that downloads profiles from Nightscout
 ## Credit https://github.com/viq
 RUN curl -s https://raw.githubusercontent.com/viq/oref0/profile_from_nightscout/bin/get_profile.py > get_profile.py
 
