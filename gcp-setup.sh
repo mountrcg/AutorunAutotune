@@ -8,7 +8,7 @@
 #Enabled API's
 gcloud services enable run.googleapis.com
 gcloud services enable cloudbuild.googleapis.com
-gcloud services enable containerregistry.googleapis.com 
+gcloud services enable containerregistry.googleapis.com
 gcloud services enable cloudscheduler.googleapis.com
 
 #caputre project number for setting up iam permissions
@@ -33,14 +33,14 @@ SERVICE_URL=$(gcloud beta run services describe autot --platform managed --regio
 #Create Service acount for invoking the service
 gcloud iam service-accounts create autot-invoker --display-name "My autot-invoker servce account"
 
-#Let invoker Service invoke a cloud run service 
+#Let invoker Service invoke a cloud run service
 gcloud run services add-iam-policy-binding autot \
    --member=serviceAccount:autot-invoker@$GOOGLE_CLOUD_PROJECT.iam.gserviceaccount.com \
    --role=roles/run.invoker --platform managed --region europe-central2
 
-#setup schedule for 2:05 am using service acount to invoke the cloud run instance. 
+#setup schedule for 2:05 am using service acount to invoke the cloud run instance.
 gcloud app create --region=europe-central2
-gcloud scheduler jobs create http autot-schedule --schedule "05 2 * * *" \
+gcloud scheduler jobs create http autot-schedule --schedule "05 2 * * 1" \
    --http-method=get \
    --uri=${SERVICE_URL}/exec \
    --oidc-service-account-email=autot-invoker@$GOOGLE_CLOUD_PROJECT.iam.gserviceaccount.com
